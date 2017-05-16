@@ -13,10 +13,9 @@ const user = {
   lastName: 'Perez'
 };
 
-const element = (
-  <h1>{getGreeting({firstName: "carrot", lastName: "tomato"})}</h1>
+const name = (
+  <h2>{getGreeting({firstName: "carrot", lastName: "tomato"})}</h2>
 );
-
 
 function getGreeting(user) {
   if (user) {
@@ -25,7 +24,17 @@ function getGreeting(user) {
   return <h1>Hello, Stranger.</h1>;
 }
 
-ReactDOM.render(
-  element,
-  document.getElementById('root')
-);
+function tick() {
+  const element = (
+    <div>
+      <h1>{name}</h1>
+      <h2>It is {new Date().toLocaleTimeString()}.</h2>
+    </div>
+  );
+  ReactDOM.render(
+    element,
+    document.getElementById('root')
+  );
+}
+
+setInterval(tick, 1000);
