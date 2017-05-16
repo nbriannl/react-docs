@@ -13,15 +13,6 @@ const user = {
   lastName: 'Perez'
 };
 
-{/*You can wrap JavaScript expressions inside JSX */}
-/*
-const element = (
-  <a href="https://www.google.com"><h1>
-    Hello, {formatName(user)}!
-  </h1></a>
-);
-*/
-
 const element = (
   <h1>{getGreeting({firstName: "carrot", lastName: "tomato"})}</h1>
 );
