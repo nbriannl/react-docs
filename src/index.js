@@ -7,7 +7,6 @@ function formatName(user) {
   return user.firstName + ' ' + user.lastName;
 }
 
-//test comment
 
 const user = {
   firstName: 'Harper',
