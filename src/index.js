@@ -47,25 +47,27 @@ class Clock extends React.Component {
 
 //============================
 
-class Toggle extends React.Component {
-  constructor(props) {
+class ToggleLogin extends React.Component {
+  /*constructor(props) {
     super(props);
-    this.state = { isToggleOn: true };
+    this.state = { isToggleOn: this.props.isLoggedIn };
 
     // This binding is necessarry to make 'this' work in the callback
-    this.handleClick = this.handleClick.bind(this);
   }
+  */
 
+  /*
   handleClick() {
     this.setState(prevState => ({
       isToggleOn: !prevState.isToggleOn
     }));
   }
+  */
 
   render() {
     return (
-      <button onClick={this.handleClick}>
-        {this.state.isToggleOn ? 'ON' : 'OFF'}
+      <button onClick={() => this.props.onClick()}>
+        {this.props.isLoggedIn ? 'SWITCH TO GUEST' : 'SWTICH TO USER'}
       </button>
     );
   }
@@ -121,24 +123,44 @@ function GuestGreeting(props) {
 }
 
 function Greeting(props) {
-  const isLoggedIn = props.isLoggedIn;
+  var isLoggedIn = props.isLoggedIn;
   if (isLoggedIn) {
     return <UserGreeting />;
   }
   return <GuestGreeting />;
 }
 
+//============================
 
-function App() {
-  return (
-    <div>
-      <Clock />
-      <Clock />
-      <Button />
-      <Toggle />
-      <Greeting isLoggedIn={false} />
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      isLoggedIn: false 
+    };
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.setState(prevState => ({
+      isLoggedIn: !prevState.isLoggedIn
+    }));
+  } 
+
+  render() {
+    return (
+      <div>
+        <Clock />
+        <Button />
+        <ToggleLogin 
+          onClick={() => this.handleClick()}  
+          isLoggedIn={this.state.isLoggedIn} 
+        />
+        <Greeting isLoggedIn={this.state.isLoggedIn} />
+      </div>
+    );
+  }
 }
 
 
