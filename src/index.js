@@ -36,6 +36,7 @@ class Clock extends React.Component {
   }
 
   //more life cycle hooks
+  //Only used is the Clock Component is ever removed from the DOM.
   componentWillUnmount() {
     clearInterval(this.timerID);
   }
