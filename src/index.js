@@ -89,7 +89,7 @@ function GuestGreeting(props) {
 }
 
 function Greeting(props) {
-  var isLoggedIn = props.isLoggedIn;
+  const isLoggedIn = props.isLoggedIn;
   if (isLoggedIn) {
     return <UserGreeting />;
   }
@@ -114,36 +114,30 @@ function LogoutButton(props) {
   );
 }
 
+function UserStatus(props) {
+  const isLoggedIn = props.isLoggedIn;
+  return (
+    <div>
+      The user is <b>{isLoggedIn ? 'currently' : 'not'}</b> logged in.
+    </div>
+  )
+}
+
 class LoginControl extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleLoginClick = this.handleLoginClick.bind(this);
-    this.handleLogoutClick = this.handleLogoutClick.bind(this);
-    this.state = {isLoggedIn: false }
-  }
-
-  handleLoginClick() {
-    console.log("loginclick");
-    this.setState({isLoggedIn: true});
-  }
-
-  handleLogoutClick() {
-    console.log("logoutlick");
-    this.setState({isLoggedIn: false});
-  }
 
   render() {
-    const isLoggedIn = this.state.isLoggedIn;
-    
+    var isLoggedIn = this.props.isLoggedIn;
+
     let button = null;
     if (isLoggedIn) {
-      button = <LogoutButton onClick={this.handleLogoutClick} />;
+      button = <LogoutButton onClick={this.props.onClick} />;
     } else {
-      button = <LoginButton onClick={this.handleLoginClick} />;
+      button = <LoginButton onClick={this.props.onClick} />;
     }
 
     return (
       <div>
+        <UserStatus isLoggedIn={isLoggedIn} />
         {button}
         <Greeting isLoggedIn={isLoggedIn} />
       </div>
@@ -154,6 +148,10 @@ class LoginControl extends React.Component {
 //============================
 
 function Mailbox(props) {
+  if (!props.isLoggedIn){
+    return null;
+  }
+
   const unreadMessages = props.unreadMessages;
   return (
     <div>
@@ -168,6 +166,7 @@ function Mailbox(props) {
 }
 
 
+
 //============================
 
 const messages = ['React', 'Re: React', 'Re:Re: React'];
@@ -175,6 +174,23 @@ const messages = ['React', 'Re: React', 'Re:Re: React'];
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isLoggedIn: false
+    }
+    
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+  }
+
+  handleLoginClick() {
+    console.log("loginclick");
+    this.setState({ isLoggedIn: true});
+  }
+
+  handleLogoutClick() {
+    console.log("logoutclick");
+    this.setState({ isLoggedIn: false});
   }
 
   render() {
@@ -182,8 +198,16 @@ class App extends React.Component {
       <div>
         <Clock />
         <FidgetButton />
-        <LoginControl />
-        <Mailbox unreadMessages={messages} />
+        <LoginControl 
+          onClick = { (isLoggedIn) => 
+            { 
+            if (isLoggedIn) return this.handleLoginClick()
+            else return this.handleLogoutClick()
+            }
+          }
+          isLoggedIn={this.state.isLoggedIn}
+        />
+        <Mailbox isLoggedIn={this.state.isLoggedIn} unreadMessages={messages} />
       </div>
     );
   }
