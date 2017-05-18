@@ -48,22 +48,6 @@ class Clock extends React.Component {
 //============================
 
 class ToggleLogin extends React.Component {
-  /*constructor(props) {
-    super(props);
-    this.state = { isToggleOn: this.props.isLoggedIn };
-
-    // This binding is necessarry to make 'this' work in the callback
-  }
-  */
-
-  /*
-  handleClick() {
-    this.setState(prevState => ({
-      isToggleOn: !prevState.isToggleOn
-    }));
-  }
-  */
-
   render() {
     return (
       <button onClick={() => this.props.onClick()}>
@@ -129,6 +113,62 @@ function Greeting(props) {
   }
   return <GuestGreeting />;
 }
+//============================
+
+function LoginButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Login
+    </button>
+  );
+}
+
+function LogoutButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Logout
+    </button>
+  );
+}
+
+class LoginControl extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+    this.state = {isLoggedInNew: false }
+  }
+
+  handleLoginClick() {
+    console.log("loginclick");
+    this.setState({isLoggedInNew: true});
+  }
+
+  handleLogoutClick() {
+    console.log("logoutlick");
+    this.setState({isLoggedInNew: false});
+  }
+
+  render() {
+    const isLoggedInNew = this.state.isLoggedInNew;
+    
+    let button = null;
+    if (isLoggedInNew) {
+      button = <LogoutButton onClick={this.handleLogoutClick} />;
+    } else {
+      button = <LoginButton onClick={this.handleLoginClick} />;
+    }
+
+    return (
+      <div>
+        {button}
+        <Greeting isLoggedIn={isLoggedInNew} />
+      </div>
+    );
+  }
+}
+
+
 
 //============================
 
@@ -153,6 +193,7 @@ class App extends React.Component {
       <div>
         <Clock />
         <Button />
+        <LoginControl />
         <ToggleLogin 
           onClick={() => this.handleClick()}  
           isLoggedIn={this.state.isLoggedIn} 
