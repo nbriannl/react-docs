@@ -148,7 +148,7 @@ class LoginControl extends React.Component {
 //============================
 
 function Mailbox(props) {
-  if (!props.isLoggedIn){
+  if (!props.isLoggedIn) {
     return null;
   }
 
@@ -178,19 +178,19 @@ class App extends React.Component {
     this.state = {
       isLoggedIn: false
     }
-    
+
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
   }
 
   handleLoginClick() {
     console.log("loginclick");
-    this.setState({ isLoggedIn: true});
+    this.setState({ isLoggedIn: true });
   }
 
   handleLogoutClick() {
     console.log("logoutclick");
-    this.setState({ isLoggedIn: false});
+    this.setState({ isLoggedIn: false });
   }
 
   render() {
@@ -198,12 +198,9 @@ class App extends React.Component {
       <div>
         <Clock />
         <FidgetButton />
-        <LoginControl 
-          onClick = { (isLoggedIn) => 
-            { 
-            if (isLoggedIn) return this.handleLoginClick()
-            else return this.handleLogoutClick()
-            }
+        <LoginControl
+          onClick={
+            (!this.state.isLoggedIn) ? this.handleLoginClick : this.handleLogoutClick
           }
           isLoggedIn={this.state.isLoggedIn}
         />
