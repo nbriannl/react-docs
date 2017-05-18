@@ -3,20 +3,9 @@ import ReactDOM from 'react-dom';
 //import App from './App';
 import './index.css';
 
-/*
-function tick() {
-  const element = (
-    <div>
-      <h1>Hello, world!</h1>
-      <h2>It is {new Date().toLocaleTimeString()}.</h2>
-    </div>
-  );
-  ReactDOM.render(
-    element,
-    document.getElementById('root')
-  );
+function FormattedDate(props) {
+  return <h2>It is {props.date.toLocaleTimeString()}.</h2>;
 }
-*/
 
 /*function Clock(props) {*/
 class Clock extends React.Component {
@@ -51,11 +40,22 @@ class Clock extends React.Component {
     return (
       <div>
         <h1>Hello, world!</h1>
-        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+        <FormattedDate date={this.state.date} />
       </div>
     );
   }
 }
+
+function App() {
+  return (
+    <div>
+      <Clock />;
+      <Clock />;
+      <Clock />;
+    </div>
+  );
+}
+
 
 /*function tick() {*/
 /*const element = (
@@ -67,7 +67,7 @@ class Clock extends React.Component {
 ReactDOM.render(
   /*element,*/
   /*<Clock date={new Date()} />,*/
-  <Clock />,
+  <App />,
   document.getElementById('root')
 );
 /*}*/
