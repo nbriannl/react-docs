@@ -169,28 +169,13 @@ function Mailbox(props) {
 
 //============================
 
-const numbers = [1, 2, 3, 4, 5];
-
-function NumberList(props) {
-  const numbers = props.numbers;
-  const listItems = numbers.map((number) =>
-    <li key={number.toString()}>
-      {number}
-    </li>
-  );
-
-  return (
-    <ul>{listItems}</ul>
-  );
-}
-
 //============================
 
 
 
 const messages = ['React', 'Re: React', 'Re:Re: React'];
 
-class App extends React.Component {
+class DynamicUserBody extends React.Component {
   constructor(props) {
     super(props);
 
@@ -215,8 +200,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Clock />
-        <FidgetButton />
         <LoginControl
           onClick={
             (!this.state.isLoggedIn) ? this.handleLoginClick : this.handleLogoutClick
@@ -224,10 +207,27 @@ class App extends React.Component {
           isLoggedIn={this.state.isLoggedIn}
         />
         <Mailbox isLoggedIn={this.state.isLoggedIn} unreadMessages={messages} />
-        <NumberList numbers={numbers} />
       </div>
     );
   }
+}
+
+function StaticHeader(props) {
+  return (
+    <div>
+      <Clock />
+      <FidgetButton />
+    </div>
+  );
+}
+
+function App(props) {
+  return (
+    <div>
+      <StaticHeader />
+      <DynamicUserBody />
+    </div>
+  );
 }
 
 
