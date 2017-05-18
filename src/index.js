@@ -7,6 +7,32 @@ function FormattedDate(props) {
   return <h2>It is {props.date.toLocaleTimeString()}.</h2>;
 }
 
+class Toggle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isToggleOn: true };
+
+    // This binding is necessarry to make 'this' work in the callback
+    this.handleClick = this.handleClick.bind(this); 
+  }
+
+  handleClick(){
+    this.setState(prevState => ({
+      isToggleOn: !prevState.isToggleOn
+    }));
+  } 
+
+  render() {
+    return (
+      <button onClick={this.handleClick}>
+        {this.state.isToggleOn ? 'ON' : 'OFF'}
+      </button>
+    );
+  }
+}
+
+
+
 /*function Clock(props) {*/
 class Clock extends React.Component {
   constructor(props) {
@@ -49,9 +75,9 @@ class Clock extends React.Component {
 function App() {
   return (
     <div>
-      <Clock />;
-      <Clock />;
-      <Clock />;
+      <Clock />
+      <Clock />
+      <Toggle />
     </div>
   );
 }
