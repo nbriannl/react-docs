@@ -148,9 +148,6 @@ class LoginControl extends React.Component {
 //============================
 
 function Mailbox(props) {
-  if (!props.isLoggedIn) {
-    return null;
-  }
 
   const unreadMessages = props.unreadMessages;
   return (
@@ -170,8 +167,8 @@ function Mailbox(props) {
 //============================
 
 const posts = [
-  {id: 1, title: 'Hello World', content: 'Wecome to learning React!'},
-  {id: 2, title: 'Installation', content: 'You can install React from npm.'}
+  { id: 1, title: 'Hello World', content: 'Wecome to learning React!' },
+  { id: 2, title: 'Installation', content: 'You can install React from npm.' }
 ];
 
 function Blog(props) {
@@ -185,7 +182,7 @@ function Blog(props) {
     </ul>
   );
 
-  const content = props.posts.map((post) => 
+  const content = props.posts.map((post) =>
     <div key={post.id}>
       <h3>{post.title}</h3>
       <p>{post.content}</p>
@@ -199,6 +196,39 @@ function Blog(props) {
       {content}
     </div>
   );
+}
+
+//============================
+
+class NameForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: ''};
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input type="text" value={this.state.value} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
 }
 
 //============================
@@ -228,20 +258,39 @@ class DynamicUserBody extends React.Component {
   }
 
   render() {
+    const isLoggedIn = this.state.isLoggedIn;
+
+    let section = null;
+    if (!isLoggedIn) {
+      section = (
+        <LoginControl
+          onClick={this.handleLoginClick}
+          isLoggedIn={isLoggedIn}
+        />
+      );
+    } else {
+      section = (
+        <div>
+          <LoginControl
+            onClick={this.handleLogoutClick}
+            isLoggedIn={isLoggedIn}
+          />
+          <Mailbox unreadMessages={messages} />
+          <Blog posts={posts} />
+          <NameForm />
+        </div>
+      );
+    }
+
     return (
       <div>
-        <LoginControl
-          onClick={
-            (!this.state.isLoggedIn) ? this.handleLoginClick : this.handleLogoutClick
-          }
-          isLoggedIn={this.state.isLoggedIn}
-        />
-        <Mailbox isLoggedIn={this.state.isLoggedIn} unreadMessages={messages} />
-        <Blog posts={posts} /> 
+        {section}
       </div>
     );
   }
 }
+
+//===================
 
 function StaticHeader(props) {
   return (
