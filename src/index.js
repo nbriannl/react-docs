@@ -200,18 +200,23 @@ function Blog(props) {
 
 //============================
 
+/*Controlled Components*/
+
 class NameForm extends React.Component {
   constructor(props) {
     super(props);
+    // In React, mutable state is typically kept in the state prop of components
     this.state = { value: '' };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // And this mutable sate is only updated with setState()
+
   handleChange(event) {
     this.setState({ value: event.target.value });
-    //this.setState({value: event.target.value.toUpperCase()});
+    //Possbile addition: this.setState({value: event.target.value.toUpperCase()});
   }
 
   handleSubmit(event) {
@@ -319,11 +324,13 @@ class Reservation extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
+  // event.target gets the element that triggered a specific event.
   handleInputChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
+    // See ES6 docs on computed property name syntax
     this.setState({
       [name]: value
     });
