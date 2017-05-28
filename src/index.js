@@ -369,6 +369,7 @@ class DynamicUserBody extends React.Component {
   constructor(props) {
     super(props);
 
+    //comment
     this.state = {
       isLoggedIn: false
     }
