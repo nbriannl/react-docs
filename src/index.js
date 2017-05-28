@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 //import App from './App';
 import './index.css';
 
+// zachary was here
 function FormattedDate(props) {
   return <h2>It is {props.date.toLocaleTimeString()}.</h2>;
 }
